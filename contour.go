@@ -138,3 +138,10 @@ func (c *Contour) move(x, y float64) {
 func (c *Contour) nvertices() int {
 	return len(c.points)
 }
+
+func (c *Contour) GetPoint(index int ) orb.Point {
+	return c.points[index]
+}
+func (c *Contour) Nvertices() int {
+	return c.nvertices()
+}

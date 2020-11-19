@@ -361,31 +361,36 @@ func possibleIntersection(event1 *SweepEvent, event2 *SweepEvent) error {
 		return nil
 	}
 
-	if !sorted_events[0].equalsTo(sorted_events[3].other) {
-		sorted_events[1].edgeType = EDGE_NON_CONTRIBUTING
-		if event1.inOut == event2.inOut {
-			sorted_events[2].edgeType = EDGE_SAME_TRANSITION
-		} else {
-			sorted_events[2].edgeType = EDGE_DIFFERENT_TRANSITION
+	// NEED DEBUG
+	if len(sorted_events) == 4 {
+		if !sorted_events[0].equalsTo(sorted_events[3].other) {
+			sorted_events[1].edgeType = EDGE_NON_CONTRIBUTING
+			if event1.inOut == event2.inOut {
+				sorted_events[2].edgeType = EDGE_SAME_TRANSITION
+			} else {
+				sorted_events[2].edgeType = EDGE_DIFFERENT_TRANSITION
+			}
+
+			divideSegment(sorted_events[0], sorted_events[1].p)
+			divideSegment(sorted_events[1], sorted_events[2].p)
+
+			return nil
 		}
 
+		sorted_events[1].edgeType = EDGE_NON_CONTRIBUTING
+		sorted_events[1].other.edgeType = EDGE_NON_CONTRIBUTING
 		divideSegment(sorted_events[0], sorted_events[1].p)
-		divideSegment(sorted_events[1], sorted_events[2].p)
 
-		return nil
+		if event1.inOut == event2.inOut {
+			sorted_events[3].other.edgeType = EDGE_SAME_TRANSITION
+		} else {
+			sorted_events[3].other.edgeType = EDGE_DIFFERENT_TRANSITION
+		}
+
+		divideSegment(sorted_events[3].other, sorted_events[2].p)
 	}
 
-	sorted_events[1].edgeType = EDGE_NON_CONTRIBUTING
-	sorted_events[1].other.edgeType = EDGE_NON_CONTRIBUTING
-	divideSegment(sorted_events[0], sorted_events[1].p)
 
-	if event1.inOut == event2.inOut {
-		sorted_events[3].other.edgeType = EDGE_SAME_TRANSITION
-	} else {
-		sorted_events[3].other.edgeType = EDGE_DIFFERENT_TRANSITION
-	}
-
-	divideSegment(sorted_events[3].other, sorted_events[2].p)
 	return nil
 }
 
