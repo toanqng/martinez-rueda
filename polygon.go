@@ -106,10 +106,10 @@ func (p *Polygon) DEBUG() {
 	var data strings.Builder
 	for _, con := range p.contours {
 		data.WriteString("[")
-		for _, point := range con.points{
-			data.WriteString(fmt.Sprintf("[%v,%v],",point.Lon(), point.Lat()) )
+		for _, point := range con.points {
+			data.WriteString(fmt.Sprintf("[%v,%v],", point.Lon(), point.Lat()))
 		}
 		data.WriteString("]")
 	}
-	fmt.Println( strings.Replace(data.String(), "],]", "]]", -1))
+	fmt.Println(strings.Replace(data.String(), "],]", "]]", -1))
 }

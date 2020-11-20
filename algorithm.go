@@ -178,7 +178,6 @@ func Compute(subject *Polygon, clipping *Polygon, operation OPERATION) (result *
 					break
 
 				case OP_UNION:
-
 					if !e.other.inside {
 
 						connector.add(e.segment())
@@ -389,7 +388,6 @@ func possibleIntersection(event1 *SweepEvent, event2 *SweepEvent) error {
 
 		divideSegment(sorted_events[3].other, sorted_events[2].p)
 	}
-
 
 	return nil
 }

@@ -139,7 +139,7 @@ func (c *Contour) nvertices() int {
 	return len(c.points)
 }
 
-func (c *Contour) GetPoint(index int ) orb.Point {
+func (c *Contour) GetPoint(index int) orb.Point {
 	return c.points[index]
 }
 func (c *Contour) Nvertices() int {

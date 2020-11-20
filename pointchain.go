@@ -65,6 +65,7 @@ func (pc *PointChain) linkSegment(segment Segment) bool {
 		} else {
 			pc.segments = append(pc.segments, segment.end())
 		}
+		return true
 	}
 	return false
 }
@@ -91,6 +92,7 @@ func (pc *PointChain) linkChain(other *PointChain) bool {
 	}
 
 	if otherFront.Equal(front) {
+
 		// Shift an element off the beginning of array
 		pc.segments = pc.segments[1:]
 		other.segments = segmentsReverse(other.segments)
@@ -115,4 +117,8 @@ func segmentsReverse(segments []orb.Point) []orb.Point {
 		segments[i], segments[j] = segments[j], segments[i]
 	}
 	return segments
+}
+
+func (pc *PointChain) Size() int {
+	return len(pc.segments)
 }

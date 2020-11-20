@@ -32,6 +32,7 @@ func (c *Connector) add(segment Segment) {
 		}
 
 		if chain.closed {
+
 			if len(chain.segments) == 2 {
 				chain.closed = false
 				return
@@ -42,10 +43,13 @@ func (c *Connector) add(segment Segment) {
 			c.openPolygons = append(c.openPolygons[:jdx], c.openPolygons[(jdx+1):]...)
 			return
 		}
+
 		// if chain not closed
 		k := len(c.openPolygons)
+
 		for idx := jdx + 1; idx < k; idx++ {
-			if chain.linkChain(c.openPolygons[idx]) {
+			v := c.openPolygons[idx]
+			if chain.linkChain(v) {
 				//append(s[:index], s[index+1:]...)
 				c.openPolygons = append(c.openPolygons[:idx], c.openPolygons[(idx+1):]...)
 				return
