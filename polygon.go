@@ -2,6 +2,7 @@ package martinez_rueda
 
 import (
 	"fmt"
+	geojson "github.com/paulmach/go.geojson"
 	"github.com/paulmach/orb"
 	"math"
 	"strings"
@@ -100,6 +101,18 @@ func (p *Polygon) erase(index int) {
 
 func (p *Polygon) clear() {
 	p.contours = []Contour{}
+}
+
+func (p *Polygon) ToPolygonGeometry() *geojson.Geometry{
+	apoint := [][]float64{}
+	for _, con := range p.contours {
+		for _, point := range con.points {
+			apoint = append(apoint, []float64{point.Lon(), point.Lat()})
+		}
+	}
+	return geojson.NewPolygonGeometry([][][]float64{
+		apoint,
+	})
 }
 
 func (p *Polygon) DEBUG() {
