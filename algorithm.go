@@ -3,6 +3,7 @@ package martinez_rueda
 import (
 	"errors"
 	"github.com/paulmach/orb"
+	"log"
 	"math"
 )
 
@@ -137,11 +138,15 @@ func Compute(subject *Polygon, clipping *Polygon, operation OPERATION) (result *
 			}
 
 			if next != nil {
-				possibleIntersection(e, next)
+				if err := possibleIntersection(e, next); err != nil {
+					log.Fatal("possibleIntersection(e, next)", err, gatherSweepEventData(*e), gatherSweepEventData(*next))
+				}
 			}
 
 			if prev != nil {
-				possibleIntersection(prev, e)
+				if err := possibleIntersection(prev, e); err != nil {
+					log.Fatal("possibleIntersection(prev, e)", err, gatherSweepEventData(*prev), gatherSweepEventData(*e))
+				}
 			}
 		} else {
 			var prev *SweepEvent
@@ -179,8 +184,9 @@ func Compute(subject *Polygon, clipping *Polygon, operation OPERATION) (result *
 
 				case OP_UNION:
 					if !e.other.inside {
+						eSeg := e.segment()
 
-						connector.add(e.segment())
+						connector.add(eSeg)
 
 					}
 
@@ -224,7 +230,9 @@ func Compute(subject *Polygon, clipping *Polygon, operation OPERATION) (result *
 			}
 
 			if next != nil && prev != nil {
-				possibleIntersection(next, prev)
+				if err := possibleIntersection(next, prev); err != nil {
+					log.Fatal("possibleIntersection(next, prev)", err, gatherSweepEventData(*next), gatherSweepEventData(*prev))
+				}
 			}
 
 		}
@@ -545,4 +553,5 @@ func divideSegment(event *SweepEvent, point orb.Point) {
 
 	eq.enqueue(left)
 	eq.enqueue(right)
+
 }

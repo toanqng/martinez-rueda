@@ -35,6 +35,7 @@ func (pc *PointChain) linkSegment(segment Segment) bool {
 			//  Prepend one  elements to the beginning of an array
 			pc.segments = append([]orb.Point{segment.end()}, pc.segments...)
 		}
+
 		return true
 	}
 
@@ -107,6 +108,9 @@ func (pc *PointChain) linkChain(other *PointChain) bool {
 		other.segments = segmentsReverse(other.segments)
 		// insert reversed at the end of $this->segments
 		pc.segments = append(pc.segments, other.segments...)
+
+		return true
+
 	}
 
 	return false

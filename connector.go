@@ -27,6 +27,7 @@ func (c *Connector) add(segment Segment) {
 	for jdx := 0; jdx < size; jdx++ {
 		chain := c.openPolygons[jdx]
 		isLinkSegment := chain.linkSegment(segment)
+
 		if !isLinkSegment {
 			continue
 		}
@@ -41,6 +42,7 @@ func (c *Connector) add(segment Segment) {
 
 			//append(s[:index], s[index+1:]...)
 			c.openPolygons = append(c.openPolygons[:jdx], c.openPolygons[(jdx+1):]...)
+
 			return
 		}
 
@@ -52,6 +54,7 @@ func (c *Connector) add(segment Segment) {
 			if chain.linkChain(v) {
 				//append(s[:index], s[index+1:]...)
 				c.openPolygons = append(c.openPolygons[:idx], c.openPolygons[(idx+1):]...)
+
 				return
 			}
 		}
